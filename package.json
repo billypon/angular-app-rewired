@@ -1,6 +1,6 @@
 {
   "name": "angular-app-rewired",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "Tweak the angular cli webpack config(s) without using 'eject'",
   "author": "billypon <billypon@gmail.com>",
   "license": "MIT",
