@@ -5,7 +5,7 @@ ng-rewired.js of your project root:
 ```javascript
 var stylusLoader = require('stylus-loader');
 
-module.exports = exports = {
+module.exports = {
   getStylesConfig: function (config) {
     config.plugins.push(new stylusLoader.OptionsPlugin({
       default: {

@@ -10,8 +10,12 @@ var bin = 'ng';
 var cmd = args[0];
 var args = args.slice(1);
 
+if (!angular) {
+  throw new Error('there\'s no local anguar cli in your project');
+}
+
 var rewiredConfig = process.cwd() + '/ng-rewired.js';
-var webpackConfigs = angular && angular + '/models/webpack-configs';
+var webpackConfigs = lookupWebpackConfig();
 
 if (!fs.existsSync(webpackConfigs)) {
   throw new Error('can\'t find webpack config of angular cli');
@@ -36,6 +40,18 @@ if (fs.existsSync(rewiredConfig)) {
 }
 
 require(angular + '/bin/ng');
+
+function lookupWebpackConfig() {
+  var paths = [
+    process.cwd() + '/node_modules/@angular-devkit/build-angular/src/angular-cli-files/models/webpack-configs',
+    angular + '/models/webpack-configs'
+  ];
+  for (var i in paths) {
+    if (fs.existsSync(paths[i])) {
+      return paths[i];
+    }
+  }
+}
 
 function rewireWebpackConfig(webpackConfigs, x) {
   var webpackConfig = webpackConfigs[x];
