@@ -5,7 +5,8 @@
   "author": "billypon <billypon@gmail.com>",
   "license": "MIT",
   "bin": {
-    "ng-rewired": "index.js"
+    "ng-rewired": "index.js",
+    "ng-rewired-configs": "index.js"
   },
   "dependencies": {
     "module-find": "^1.1.1"

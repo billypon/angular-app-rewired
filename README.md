@@ -24,3 +24,5 @@ modify script in package.json(ng -> ng-rewired):
   "build": "ng-rewired build --prod"
 }
 ```
+
+call ng-rewired-configs in shell, will show you all support configs for ng-rewired.js.

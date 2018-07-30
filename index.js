@@ -1,6 +1,7 @@
 #!/usr/bin/env node
 
 var fs = require('fs');
+var path = require('path');
 
 var find = require('module-find')();
 var angular = find('@angular/cli');
@@ -11,14 +12,22 @@ var cmd = args[0];
 var args = args.slice(1);
 
 if (!angular) {
-  throw new Error('there\'s no local anguar cli in your project');
+  throw new Error('there\'s no local angular cli in your project');
 }
 
-var rewiredConfig = process.cwd() + '/ng-rewired.js';
 var webpackConfigs = lookupWebpackConfig();
+var rewiredConfig = process.cwd() + '/ng-rewired.js';
 
 if (!fs.existsSync(webpackConfigs)) {
   throw new Error('can\'t find webpack config of angular cli');
+}
+
+if (path.basename(process.argv[1]) === 'ng-rewired-configs') {
+  webpackConfigs = require(webpackConfigs);
+  for (var x in webpackConfigs) {
+    console.log(x);
+  }
+  return;
 }
 
 if (fs.existsSync(rewiredConfig)) {
@@ -28,8 +37,8 @@ if (fs.existsSync(rewiredConfig)) {
     case 'serve':
     case 'test':
     case 'e2e':
-      rewiredConfig = require(rewiredConfig);
       webpackConfigs = require(webpackConfigs);
+      rewiredConfig = require(rewiredConfig);
       for (var x in webpackConfigs) {
         if (rewiredConfig[x]) {
           rewireWebpackConfig(webpackConfigs, x);
